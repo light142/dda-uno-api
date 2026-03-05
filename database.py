@@ -14,12 +14,17 @@ from config import get_settings
 
 settings = get_settings()
 
+_connect_args = {}
+if "postgresql" in settings.DATABASE_URL:
+    _connect_args["prepared_statement_cache_size"] = 0
+
 engine = create_async_engine(
     settings.DATABASE_URL,
     echo=False,
     future=True,
     pool_pre_ping=True,
     pool_recycle=300,
+    connect_args=_connect_args,
 )
 
 async_session = sessionmaker(
