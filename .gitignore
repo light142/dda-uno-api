@@ -8,3 +8,6 @@ venv/
 data/
 models/**/*.pt
 models/**/*.pth
+
+# Keep lite models (small, needed for deployment)
+!models_lite/**/*.pt

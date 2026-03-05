@@ -50,9 +50,18 @@ async def _migrate(conn):
     migrations = [
         ("games", "bot_mode", "VARCHAR(30) DEFAULT 'adaptive'"),
     ]
+    is_sqlite = "sqlite" in settings.DATABASE_URL
     for table, column, col_def in migrations:
-        exists = await conn.scalar(
-            text(f"SELECT COUNT(*) FROM pragma_table_info('{table}') WHERE name='{column}'")
-        )
+        if is_sqlite:
+            exists = await conn.scalar(
+                text(f"SELECT COUNT(*) FROM pragma_table_info('{table}') WHERE name='{column}'")
+            )
+        else:
+            exists = await conn.scalar(
+                text(
+                    "SELECT COUNT(*) FROM information_schema.columns "
+                    f"WHERE table_name='{table}' AND column_name='{column}'"
+                )
+            )
         if not exists:
             await conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {column} {col_def}"))
