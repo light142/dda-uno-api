@@ -10,3 +10,4 @@ numpy
 asyncpg
 torch --index-url https://download.pytorch.org/whl/cpu
 rlcard
+httpx

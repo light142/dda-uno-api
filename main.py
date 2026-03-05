@@ -5,6 +5,7 @@ Run with:
     uvicorn main:app --reload
 """
 
+import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -24,6 +25,19 @@ settings = get_settings()
 # ── Lifespan (startup / shutdown) ─────────────────────────────────────────
 
 
+async def _keep_alive():
+    """Self-ping every 14 minutes to prevent HF Spaces from sleeping."""
+    import httpx
+    url = "http://localhost:7860/"
+    while True:
+        await asyncio.sleep(14 * 60)
+        try:
+            async with httpx.AsyncClient() as client:
+                await client.get(url, timeout=10)
+        except Exception:
+            pass
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Create database tables and preload models on startup."""
@@ -35,7 +49,9 @@ async def lifespan(app: FastAPI):
     count = import_existing_simulations()
     if count:
         print(f"  Imported {count} existing simulation results")
+    task = asyncio.create_task(_keep_alive())
     yield
+    task.cancel()
 
 
 # ── App ───────────────────────────────────────────────────────────────────
