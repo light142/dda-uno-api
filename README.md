@@ -1,3 +1,12 @@
+---
+title: DDA UNO API
+emoji: 🎴
+colorFrom: red
+colorTo: yellow
+sdk: docker
+pinned: false
+---
+
 # DDA UNO — API
 
 Deployable FastAPI service that wraps the `engine/` package to serve the UNO game over HTTP.
