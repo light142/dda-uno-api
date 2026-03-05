@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+pydantic[email]
+pyjwt
+bcrypt
+sqlalchemy[asyncio]
+aiosqlite
+numpy
+asyncpg
+torch --index-url https://download.pytorch.org/whl/cpu
+rlcard

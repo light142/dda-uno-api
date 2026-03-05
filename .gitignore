@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.claude/
+*.db
+*.db-journal
+data/
+models/**/*.pt
+models/**/*.pth

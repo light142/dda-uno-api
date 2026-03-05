@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "trained_at": "2026-02-24T10:00:00Z",
+  "episodes": 100000,
+  "seat0_opponent": "rule-v1",
+  "notes": "initial training run"
+}
