@@ -43,7 +43,7 @@ class User(Base):
     bot_strength = Column(Float, default=0.5, nullable=False)
     target_win_rate = Column(Float, default=0.25, nullable=False)
     bot_mode = Column(String(30), default="adaptive", nullable=False)
-    created_at = Column(DateTime, default=_utcnow, nullable=False)
+    created_at = Column(DateTime(timezone=True), default=_utcnow, nullable=False)
 
 
 class Game(Base):
@@ -61,5 +61,5 @@ class Game(Base):
     bot_mode = Column(String(30), default="adaptive", nullable=True)
     player_win_rate_at_game = Column(Float, nullable=True)
     model_version = Column(String(50), nullable=True)
-    created_at = Column(DateTime, default=_utcnow, nullable=False)
-    finished_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=_utcnow, nullable=False)
+    finished_at = Column(DateTime(timezone=True), nullable=True)
